@@ -8,15 +8,33 @@ const ForbiddenError = require('../errors/ForbiddenError');
 
 // возвращает все сохранённые текущим  пользователем фильмы
 module.exports.getMovies = (req, res, next) => {
-  Movie.find({owner: req.user._id})
+  Movie.find({
+    owner: req.user._id,
+  })
     .then((movie) => res.status(STATUS_OK).send(movie))
     .catch(next);
 };
 
 // создаёт фильм
 module.exports.createMovie = (req, res, next) => {
-  const { country, director, duration, year, description, image, trailerLink, thumbnail, movieId, nameRU, nameEN } = req.body;
-  Movie.create({ country, director, duration, year, description, image, trailerLink, thumbnail, movieId, nameRU, nameEN, owner: req.user._id })
+  const {
+    country, director, duration, year, description, image, trailerLink, thumbnail,
+    movieId, nameRU, nameEN,
+  } = req.body;
+  Movie.create({
+    country,
+    director,
+    duration,
+    year,
+    description,
+    image,
+    trailerLink,
+    thumbnail,
+    movieId,
+    nameRU,
+    nameEN,
+    owner: req.user._id,
+  })
     .then((movie) => res.status(STATUS_OK).send(movie))
     .catch((err) => {
       if (err.name === 'ValidationError') {

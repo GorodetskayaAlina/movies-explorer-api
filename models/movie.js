@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const validator = require('validator');
+
 const regExp = /^https?:\/\/(w{3}\.)?[a-z0-9\-.]+[\w\-._~:/?#[\]$&'()*+,;*]+#?$/i;
 
 const movieSchema = new mongoose.Schema({
@@ -53,7 +54,7 @@ const movieSchema = new mongoose.Schema({
     required: true,
   },
   movieId: {
-    type: String,
+    type: Number,
     required: true,
   },
   nameRU: {

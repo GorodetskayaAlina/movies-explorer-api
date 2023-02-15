@@ -9,7 +9,7 @@ const ValidationError = require('../errors/ValidationError');
 const NotFoundError = require('../errors/NotFoundError');
 const ConflictError = require('../errors/ConflictError');
 
-//регистрация пользователя
+// регистрация пользователя
 module.exports.createUser = (req, res, next) => {
   const {
     name, email, password,
@@ -79,6 +79,8 @@ module.exports.updateProfile = (req, res, next) => {
     .catch((err) => {
       if (err.name === 'ValidationError') {
         next(new ValidationError('Переданы некорректные данные'));
+      } else if (err.code === 11000) {
+        next(new ConflictError('Пользователь с таким Email уже существует'));
       } else { next(err); }
     });
 };
